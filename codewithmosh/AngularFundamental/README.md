@@ -14,10 +14,12 @@ Run `ng g c authors`
 To create service `authors.service.ts`
 Run `ng g s authors`
 
-Angular for directive
-  <ul>
+Angular `*ngfor` directive
+    `
+    <ul>
     <li *ngFor="let e of authors">{{e}}</li>
-  </ul>
+    </ul>
+    `
 
 ## One way binding: component -> DOM
     <img src="{{imageURL}}"/>
