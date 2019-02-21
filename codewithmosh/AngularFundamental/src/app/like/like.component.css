@@ -1,0 +1,11 @@
+span{
+    font-size:2em;
+}
+.inactive{
+    color:#ccc;
+    cursor: pointer;
+}
+
+.active{
+    color: deeppink;
+}

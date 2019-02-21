@@ -1,0 +1,6 @@
+<h2>Component: Like</h2>
+<i class="material-icons" style="color:#CCC">favorite</i>
+<i class="material-icons" style="color:deeppink">favorite</i>
+<i class="material-icons" [class.active] = "isActive" [class.inactive] = "!isActive" (click)="onClick()">favorite</i>
+<Span>{{likesCount}}</Span>
+

@@ -15,11 +15,9 @@ To create service `authors.service.ts`
 Run `ng g s authors`
 
 Angular `*ngfor` directive
-    `
     <ul>
     <li *ngFor="let e of authors">{{e}}</li>
     </ul>
-    `
 
 ## One way binding: component -> DOM
     <img src="{{imageURL}}"/>
@@ -105,38 +103,138 @@ Better 2 ways binding using ngModel
 # Pipe create command
     run `ng g p title-case'
 
-# PROJECT
+# BuildingReusableComponents
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.0.
+property and event binding
+<img [src] = "imageUrl"/>
+<button (click) = "onClick()"> </button>
 
-## Development server
+our new component need similar binding to pass value between components (parent child components)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+<favorite [isFavorite] = "post.isFavorite" (change)="onFavoriteChange()"></favorite>
 
-## Code scaffolding
+need to define the public property `isFavorite` to be an input property
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Input and output properties
+Input property to pass `state` to component
+Output property to raise `event` from component
+Input and output properties make `component API`
 
-## Build
+Input property:
+@Component({
+    ...,
+    inputs:['isFavorite']
+})
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Or better 
 
-## Running unit tests
+import {Input} from '@angular/core'
+@Input() isFavorite: boolean;`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+//using alias
+@Input('alisas') isFavorite: boolean;
 
-## Running end-to-end tests
+Output property
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+import {Output} from '@angular/core'
+@Output() change = new EventEmitter(); //event name
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Raise an event `this.change.emit();`
+e.g.
 
-# EXERCISE
-1- Get star bootstrap component
-goto getbootstrap.com -> component page ->
-use `class="glyphicon glyphicon-star"` , `glyphicon glyphicon-star-empty`
+  onClick(){
+    this.isFavorite = !this.isFavorite;
+    this.change.emit();
+  }
 
-# Pipe create command
-    run `ng g p title-case'
+## Template
+@Component({
+    template:''
+})
+
+OR (cannot have both)
+
+@Component({
+    templateUrl:'./favorite.component.html'
+})
+
+## Style
+@Component({
+    styles:[
+        `
+        ....
+        `
+    ]
+})
+
+OR/AND (if use both, the last one will take affect and  the others will be ignored)
+
+@Component({
+    stylesUrl:['./favorite.component.css','...']
+})
+
+if there are `style` in `template` file, this style will overwrite the `component style`
+
+E.g. : in favorite.component.html
+<style>
+    .glyphicon{
+        color: blue
+    }
+</style>
+
+<span class="glyphicon"> </span>
+
+# Component Style has scope inside the component
+#Shadow DOM
+var el = document.querySelector('favorite');
+var root = el.createShadowRoot();
+root.innerHTML= `
+<style>h1{color:red} </style>
+<h1>hello</h1>
+`;
+this code won't affect others <h1> style bc it implements shadown DOM
+
+#View Encapsulation
+@Component({
+    encapsulation: ViewEncapsulation.Emulated
+})
+
+3 modes
+    encapsulation: ViewEncapsulation.Emulated : default mode, emulate the shadow DOM (using css)
+    encapsulation: ViewEncapsulation.Native : it using shadow DOM in the browser. only support Chrome and some higher version of browsers. Need to copy boostrap from global styles.css to current coponent othewise the component style doesnt see the boostrap.
+
+    encapsulation: ViewEncapsulation.None . The style define here will be leak outside
+
+## ngContent element in stead of property binding
+
+./panel.component.html
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <ng-content select=".heading"></ng-content>
+  </div>
+  <div class="panel-body">
+    <ng-content select=".body"></ng-content>
+  </div>
+</div>
+
+./app.component.html
+
+<bootstrap-panel >
+    <div class="heading">Heading</div>
+    <div class="body">
+        <h2>Body</h2>
+        <p>Some content here...</p>
+    </div>
+</bootstrap-panel>
+
+or using `ng-container` to get better generated html
+
+<bootstrap-panel >
+    <ng-container class="heading">ng-container</ng-container>
+    <ng-container class="body">
+        <h2>ngContainer</h2>
+        <p>Instead of div, using ng-container to get better generated html</p>
+    </ng-container>
+</bootstrap-panel>
