@@ -238,3 +238,162 @@ or using `ng-container` to get better generated html
         <p>Instead of div, using ng-container to get better generated html</p>
     </ng-container>
 </bootstrap-panel>
+
+##Directives
+Structural: Modify the structure of the DOM by adding or removing DOM elements
+<div *ngIf="courses.length > 0">
+    List of courses
+</div>
+Attribute: Modify the attributes of DOM elements
+
+using ng-template
+
+<div *ngIf="courses.length > 0">
+    List of courses
+</div>
+<div *ngIf="courses.length ===0">
+    No courses yet
+</div>
+
+<h2>Using ng-template</h2>
+
+<div *ngIf="courses.length > 0; then coursesList else noCourse;"></div>
+<ng-template #coursesList>
+    List of courses
+</ng-template>
+<ng-template #noCourse>
+    No courses yet
+</ng-template>
+
+using ng-switch attribute directive (without *ng)
+
+<h2>ngSwitch</h2>
+<ul class="nav nav-pills">
+    <li [class.active]="viewMode=='map'"><a (click)="viewMode='map'">Map View</a></li>
+    <li [class.active]="viewMode=='list'"><a (click)="viewMode='list'">List View</a></li>
+</ul>
+<div [ngSwitch]="viewMode">
+    <div *ngSwitchCase="'map'">Map View Content</div>
+    <div *ngSwitchCase="'list'">List View Content</div>
+    <div *ngSwitchDefault></div>
+</div>
+
+<h2>ngFor</h2>
+
+<button class="btn btn-primary" (click)="onAdd()">Add</button>
+<ul>
+    <li *ngFor="let course of courses; index as i">
+        {{i}} - {{course.name}}
+        <button class="button btn-primary" (click)="onRemove(course)">Remove</button>
+    </li>
+</ul>
+
+
+<ul>
+    <li *ngFor="let course of courses; even as isEven">
+        {{course.name}} <span *ngIf="isEven">(EVEN)</span>
+        <button class="button btn-primary" (click)="onChange(course)">Change</button>
+    </li>
+</ul>
+
+## Tracking to reduce redering
+
+loadCourses(){
+    this.courses = [
+      {id:1, name:'course1'},
+      {id:2, name:'course2'},
+      {id:3, name:'course3'}
+    ];
+  }
+
+  trackCourse(index, course){
+    return course? course.id : undefined;
+  }
+
+<button class="btn btn-primary" (click)="loadCourses()">Load Courses</button>
+<ul>
+    <li *ngFor="let course of courses; trackBy: trackCourse">
+        {{ course.name}}
+    </li>
+</ul>
+
+Note: *ngIf will rewrite div block using ng-template  element and binding property [ngIf]
+
+##ngClass
+
+<!-- same but using ngClass -->
+
+<span class="glyphicon"
+[ngClass] = "{
+    'glyphicon-star':isFavorite,
+    'glyphicon-star-empty': !isFavorite
+}"
+(click) = "onClick()"
+> </span>
+
+## ngStyle
+
+<button
+    [style.backgroundColor] = "canSave? 'blue': 'gray'"
+    [style.color] = "canSave? 'white': 'black'"
+    [style.fontWeight] = "canSave? 'bold': 'normal'"
+>
+    Save
+</button>
+<!-- same but using ngStyle -->
+<button
+
+    [ngStyle]="{
+        'backgroundColor' : canSave? 'blue': 'gray',
+        'color' : canSave? 'white': 'black',
+        'fontWeight' : canSave? 'bold': 'normal'
+    }"
+>
+    Save
+</button>
+
+## Safe Traversal Operator `?`
+<p>To avoid null exception, can use `?` to verify object</p>
+<span *ngIf="task.assignee">{{task.assignee.name}}</span>
+<!-- check for not null -->
+<span>{{task.assignee?.name</span>
+
+## Creating Custom Directives
+Run `ng g d input-format`
+
+`input-format.directive.ts`
+
+import { Directive, HostListener, ElementRef, Input } from '@angular/core';
+import { format } from 'url';
+
+@Directive({
+  selector: '[appInputFormat]'
+})
+export class InputFormatDirective {
+  @Input('appInputFormat') format;
+  constructor(private el: ElementRef) { }
+  @HostListener('focus') onFocus(){
+    console.log("on Focus");
+  }
+  @HostListener('blur') onblur(){
+    //console.log("on Blur");
+    let value:string = this.el.nativeElement.value;
+    if(this.format == 'lowercase'){
+      this.el.nativeElement.value = value.toLowerCase();
+    }
+    else {
+      this.el.nativeElement.value = value.toUpperCase();
+    }
+  }
+}
+
+`app.component.ts`
+
+<h2>Creating Custom Directives</h2>
+<!-- From input-format.directive.ts, update alias to 'appInputFormat' 
+    to directly binding to the directive name -->
+<!-- Instead of using 
+<input type="text" appInputFormat [format]="'uppercase'"/> 
+now we can use
+-->
+<input type="text" [appInputFormat]="'uppercase'"/> 
