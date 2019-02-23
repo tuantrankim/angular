@@ -1,0 +1,17 @@
+<h2>Component: Favorite</h2>
+<span class="glyphicon glyphicon-star"></span>
+<span class="glyphicon"
+[class.glyphicon-star] = "isFavorite"
+[class.glyphicon-star-empty] = "!isFavorite"
+(click) = "onClick()"
+> </span>
+
+<!-- same but using ngClass -->
+
+<span class="glyphicon"
+[ngClass] = "{
+    'glyphicon-star':isFavorite,
+    'glyphicon-star-empty': !isFavorite
+}"
+(click) = "onClick()"
+> </span>
