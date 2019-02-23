@@ -397,3 +397,139 @@ export class InputFormatDirective {
 now we can use
 -->
 <input type="text" [appInputFormat]="'uppercase'"/> 
+
+## Basic Bootstrap Form
+<h2>Component: Contact-form</h2>
+<form >
+  <div class="form-group">
+  <label for="firstName">First Name</label>
+  <input type="firstName" type="text" class="form-control">
+</div>
+<div class="form-group">
+  <label for="comment">Comment</label>
+<textarea  id="" cols="30" rows="10" class="form-control"></textarea>
+</div>
+<button class="btn btn-primary">Submit</button>
+</form>
+
+## Types of Forms
+To add validation to a form we need to add FormGroup, FormControl
+-Creating controls : 2 ways Directives(Template-driven) VS Code(Reactive)
+
+Reactive Form
+  More control over validation logic
+  Good for complex forms
+  Unit testable
+
+Template-driven Form:
+  Good for simple forms
+  Simple validation
+  Easier to create
+  Less code
+  
+## ngModel
+
+  Form control need `ngModel` and name attribute.
+  
+  <h2>Component: Contact-form</h2>
+<form >
+  <div class="form-group">
+  <label for="firstName">First Name</label>
+  <input required ngModel name="firstName" #firstName="ngModel" (change)="log(firstName)" type="firstName" type="text" class="form-control">
+  <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">First Name is required</div>
+</div>
+<div class="form-group">
+  <label for="comment">Comment</label>
+<textarea ngModel name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+</div>
+<button class="btn btn-primary">Submit</button>
+</form>
+
+## Specific validation errors
+`style.css` add
+
+.form-control.ng-touched.ng-invalid{
+    border: 2px solid red;
+}
+
+`contact-form.component.ts`
+
+<h2>Component: Contact-form</h2>
+<form>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input required minlength="3" pattern="banana" ngModel name="firstName" #firstName="ngModel"
+      (change)="log(firstName)" type="firstName" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+      <div *ngIf="firstName.errors.required">First name is required</div>
+      <div *ngIf="firstName.errors.minlength">First name is minimum {{firstName.errors.minlength.requiredLength}}
+        characters</div>
+      <div *ngIf="firstName.errors.pattern">First name doesn't match the pattern</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea ngModel name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-primary">Submit</button>
+</form>
+
+## ngForm
+Any Form element without attribute `ngNoForm` and `formGroup` Angular automatically apply `ngForm` directive on that element.
+
+<h2>Component: Contact-form</h2>
+<form #f="ngForm" (ngSubmit)="submit(f)">
+
+  <div ngModelGroup="contact" #contact="ngModelGroup">
+    <div class="alert alert-danger"  *ngIf="!contact.valid">Form group invalid</div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input required minlength="3" pattern="banana" ngModel name="firstName" #firstName="ngModel"
+        (change)="log(firstName)" type="firstName" type="text" class="form-control">
+      <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+        <div *ngIf="firstName.errors.required">First name is required</div>
+        <div *ngIf="firstName.errors.minlength">First name is minimum {{firstName.errors.minlength.requiredLength}}
+          characters</div>
+        <div *ngIf="firstName.errors.pattern">First name doesn't match the pattern</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea ngModel name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+  </div>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ngModel name="isSubcribed"> Subcribe to mailing list
+    </label>
+  </div>
+  
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <select multiple ngModel name="contactMethod" id="contactMethod" class="form-control">Contact contactMethod
+      <option value=""></option>
+      <option *ngFor="let method of contactMethods" 
+      [value]="method.id">{{method.name}}
+    </option>
+    <!--  if need value of the object instead of ID only
+      <option *ngFor="let method of contactMethods" 
+    [ngValue] = "method">{{method.name}} 
+    </option>-->
+    </select>
+  </div>
+
+<div *ngFor="let method of contactMethods" class="radio">
+  <label >
+    <input ngModel type="radio" name="contactMethod" [value]="method.id"> {{method.name}}
+  </label>
+</div>
+
+
+  <p>{{f.value | json}}</p>
+  <!-- button default type = 'submit' -->
+  <button class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+  <button class="btn btn-primary" type="reset">Reset</button>
+  <button class="btn btn-primary" type="button">Don't submit</button>
+</form>
