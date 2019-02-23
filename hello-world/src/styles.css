@@ -4,3 +4,7 @@
 */
 @import "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css";
 body{padding:20px;}
+
+.form-control.ng-touched.ng-invalid{
+    border: 2px solid red;
+}
