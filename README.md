@@ -7,6 +7,15 @@ https://nodejs.org/en/download/
 Check version
 	> node --version
 	> npm --version
+
+To upgrade npm on widows
+	> npm uninstall -g
+	> windows uninstall nodeJS
+	> windows install nodeJS
+
+After pull a project run
+	> cd hello-world
+	> npm install
 	
 Install Angular
 	> npm install -g @angular/cli
