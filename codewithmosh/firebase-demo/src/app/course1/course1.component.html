@@ -1,0 +1,9 @@
+<h1>
+  course1 component
+</h1>
+<button (click)="ngOnDestroy()">Go Offline</button>
+
+<input type="text" (keyup.enter) = "add(course)" #course>
+<ul>
+    <li *ngFor="let course of courses">{{course}}</li>
+</ul>

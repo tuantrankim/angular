@@ -1,0 +1,24 @@
+<h2> Forum component</h2>
+
+<ul>
+  <li *ngFor="let article of articles$ | async"> 
+    <p>{{article.title}} </p>
+    <p>{{article.content}}</p>
+  </li>
+</ul>
+<p>{{articles$ | async | json}}</p>
+
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <label for="title">Title</label>
+  <input type="text" name="title" id="title" class="form-control"
+  [(ngModel)] = "article.title">
+
+  <label for="content">Content</label>
+  <input type="text" name="content" id="content" class="form-control"
+  [(ngModel)] = "article.content">
+
+  <p>{{f.value | json}}</p>
+  <button class="btn btn-primary" type="submit" 
+  [disabled] = "!f.valid"
+  >Send</button>
+</form>
