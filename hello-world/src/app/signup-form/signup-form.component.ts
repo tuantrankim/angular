@@ -12,34 +12,34 @@ export class SignupFormComponent {
 
           // form control
         username: new FormControl('',
-        //non async validator
+        // non async validator
         [
           Validators.required,
           Validators.minLength(3),
           UsernameValidators.cannotContainSpace
         ],
-        //Async validator example
+        // Async validator example
         UsernameValidators.shouldBeUnique
       ),
 
       // form control
-      password: new FormControl('',Validators.required)
+      password: new FormControl('', Validators.required)
 
     })
   });
 
-  login(){
+  login() {
     console.log(this.form);
     // let isValid = authService.login(this.form.value);
-    let isValid = false;
-    if(!isValid){
+    const isValid = false;
+    if (!isValid) {
       // this.username.setErrors -- to set error for control level
       this.form.setErrors({
         invalidLogin: true
       });
     }
   }
-  get username(){
+  get username() {
     return this.form.get('account.username');
   }
 }

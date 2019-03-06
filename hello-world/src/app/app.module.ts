@@ -14,6 +14,8 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { ArrayFormComponent } from './array-form/array-form.component';
 import { FormBuilderComponent } from './form-builder/form-builder.component';
+import { LoginComponent } from './login/login.component';
+import { HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -28,13 +30,15 @@ import { FormBuilderComponent } from './form-builder/form-builder.component';
     InputFormatDirective,
     ContactFormComponent,
     ArrayFormComponent,
-    FormBuilderComponent
+    FormBuilderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     CoursesService
