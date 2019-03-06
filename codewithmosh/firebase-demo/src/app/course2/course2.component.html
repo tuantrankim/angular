@@ -1,0 +1,7 @@
+<h1>
+  course2 component
+</h1>
+<ul>
+    <li *ngFor="let course of courses$ | async"> {{course}}</li>
+</ul>
+<p>test {{course$ | async | json}}</p>
