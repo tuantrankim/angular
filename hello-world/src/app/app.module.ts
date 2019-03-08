@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { ArrayFormComponent } from './array-form/array-form.component';
 import { FormBuilderComponent } from './form-builder/form-builder.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule} from '@angular/common/http';
+import { PostsComponent } from './posts/posts.component';
+import { PostService } from './services/post.service';
+import { AppErrorHandler } from './common/app-error-handler';
 
 
 @NgModule({
@@ -31,7 +34,8 @@ import { HttpClientModule} from '@angular/common/http';
     ContactFormComponent,
     ArrayFormComponent,
     FormBuilderComponent,
-    LoginComponent
+    LoginComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,9 @@ import { HttpClientModule} from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    CoursesService
+    PostService,
+    CoursesService,
+    { provide: ErrorHandler, useClass: AppErrorHandler}// telling using AppErrorHandler
   ],
   bootstrap: [AppComponent]
 })
