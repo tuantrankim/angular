@@ -13,6 +13,9 @@ import { LikeComponent } from './like/like.component';
 import { ZippyComponent } from './zippy/zippy.component';
 import { NewCourseFormComponent } from './new-course-form/new-course-form.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { GithubFollowersComponent } from './github-followers/github-followers.component';
+import { GithubFollowersService } from './services/github-followers.service';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,15 +27,20 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     LikeComponent,
     ZippyComponent,
     NewCourseFormComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    GithubFollowersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [AuthorsService],
+  providers: [
+    AuthorsService,
+    GithubFollowersService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
