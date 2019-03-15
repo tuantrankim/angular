@@ -1,0 +1,236 @@
+<h1>hello world</h1>
+<mat-checkbox
+#showDetails
+[value] = ""
+[checked] = "isChecked"
+(change) = "onChange($event)"
+>Subscribe to newsletter</mat-checkbox>
+<br/>
+
+<div *ngIf="showDetails.checked">Some details....</div>
+
+<mat-radio-group>
+  <mat-radio-button value="1">Male</mat-radio-button>
+  <mat-radio-button value="0" [checked] = "isChecked">Female</mat-radio-button>
+</mat-radio-group>
+
+<br/>
+
+<mat-radio-group value = "1">
+  <mat-radio-button value="1">Male</mat-radio-button>
+  <mat-radio-button value="0">Female</mat-radio-button>
+</mat-radio-group>
+
+<br/>
+
+<mat-form-field>
+<mat-select [(ngModel)] = "color">
+  <mat-option
+  *ngFor="let color of colors"
+  [value]="color.id">{{color.name}}</mat-option>
+</mat-select>
+</mat-form-field>
+
+<br/>
+
+<form class="example-form">
+<mat-form-field class="example-full-width">
+  <input 
+    ngModel
+    #username = "ngModel"
+    name="username"
+    type="text" matInput placeholder="Username" required>
+  <mat-hint>Type a unique username</mat-hint>
+  <span matSuffix>@domain.com</span>
+  <span matPrefix>admin.</span>
+  <mat-error *ngIf="username.invalid && username.errors.required">The username field is required.</mat-error>
+</mat-form-field>
+
+<mat-form-field class="example-full-width">
+  <textarea matInput placeholder="Leave a comment" rows="2"></textarea>
+</mat-form-field>
+
+<mat-form-field  appearance="outline" class="example-full-width">
+    <mat-label>Autosize textarea</mat-label>
+  <textarea matInput cdkTextareaAutosize
+  placeholder="Leave a comment"
+  #autosize="cdkTextareaAutosize"
+  cdkAutosizeMinRows="2"
+  cdkAutosizeMaxRows="5"></textarea>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker ></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+      <input 
+      (focus) = "mobilepicker.open()"
+      [min] = "minDate"
+      [max] = "maxDate"
+      matInput [matDatepicker]="mobilepicker" placeholder="Mobile date picker">
+      <mat-datepicker-toggle matSuffix [for]="mobilepicker"></mat-datepicker-toggle>
+      <mat-datepicker #mobilepicker touchUi="true"></mat-datepicker>
+    </mat-form-field>
+
+</form>
+
+<mat-icon>home</mat-icon>
+<mat-icon style="color:deeppink">favorite</mat-icon>
+<i class="material-icons" style="color:#CCC">favorite</i>
+
+<!-- https://material.angular.io/components/button/examples -->
+
+<h3>Basic Buttons</h3>
+<div class="example-button-row">
+  <button mat-button>Basic</button>
+  <button mat-button color="primary">Primary</button>
+  <button mat-button color="accent">Accent</button>
+  <button mat-button color="warn">Warn</button>
+  <button mat-button disabled>Disabled</button>
+  <a mat-button routerLink=".">Link</a>
+</div>
+
+<h3>Raised Buttons</h3>
+<div class="example-button-row">
+  <button mat-raised-button>Basic</button>
+  <button mat-raised-button color="primary">Primary</button>
+  <button mat-raised-button color="accent">Accent</button>
+  <button mat-raised-button color="warn">Warn</button>
+  <button mat-raised-button disabled>Disabled</button>
+  <a mat-raised-button routerLink=".">Link</a>
+</div>
+
+<h3>Stroked Buttons</h3>
+<div class="example-button-row">
+  <button mat-stroked-button>Basic</button>
+  <button mat-stroked-button color="primary">Primary</button>
+  <button mat-stroked-button color="accent">Accent</button>
+  <button mat-stroked-button color="warn">Warn</button>
+  <button mat-stroked-button disabled>Disabled</button>
+  <a mat-stroked-button routerLink=".">Link</a>
+</div>
+
+<h3>Flat Buttons</h3>
+<div class="example-button-row">
+  <button mat-flat-button>Basic</button>
+  <button mat-flat-button color="primary">Primary</button>
+  <button mat-flat-button color="accent">Accent</button>
+  <button mat-flat-button color="warn">Warn</button>
+  <button mat-flat-button disabled>Disabled</button>
+  <a mat-flat-button routerLink=".">Link</a>
+</div>
+
+<h3>Icon Buttons</h3>
+<div class="example-button-row">
+  <button mat-icon-button>
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <button mat-icon-button color="primary">
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <button mat-icon-button color="accent">
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <button mat-icon-button color="warn">
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <button mat-icon-button disabled>
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+</div>
+
+<h3>Fab Buttons</h3>
+<div class="example-button-row">
+  <button mat-fab>Basic</button>
+  <button mat-fab color="primary">Primary</button>
+  <button mat-fab color="accent">Accent</button>
+  <button mat-fab color="warn">Warn</button>
+  <button mat-fab disabled>Disabled</button>
+  <button mat-fab>
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <a mat-fab routerLink=".">Link</a>
+</div>
+
+<h3>Mini Fab Buttons</h3>
+<div class="example-button-row">
+  <button mat-mini-fab>Basic</button>
+  <button mat-mini-fab color="primary">Primary</button>
+  <button mat-mini-fab color="accent">Accent</button>
+  <button mat-mini-fab color="warn">Warn</button>
+  <button mat-mini-fab disabled>Disabled</button>
+  <button mat-mini-fab>
+    <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+  </button>
+  <a mat-mini-fab routerLink=".">Link</a>
+</div>
+<h3>Chips</h3>
+<mat-chip-list>
+  <mat-chip selected="true">One</mat-chip>
+  <mat-chip color="primary" >Two</mat-chip>
+  <mat-chip color="accent" selected>Three</mat-chip>
+</mat-chip-list>
+
+<mat-chip-list>
+  <mat-chip
+    *ngFor="let category of categories"
+    (click)="selectCategory(category)"
+    [selected]="category.selected"
+  >{{ category.name}}</mat-chip>
+</mat-chip-list>
+
+<h3>Progress spinner</h3>
+<mat-spinner></mat-spinner>
+<mat-progress-spinner 
+  *ngIf="isLoading"
+  mode="indeterminate"></mat-progress-spinner>
+<mat-progress-spinner mode="determinate" [value]="progress"></mat-progress-spinner>
+
+<h3>Tooltip</h3>
+<button mat-raised-button
+        matTooltip="Here is my tooltip"
+        matTooltipPosition="right"
+        class="example-button">
+  Hover to view tooltip
+</button>
+
+<h3>Tabs</h3>
+<mat-tab-group>
+  <mat-tab label="Billing"> Content of the billing tab </mat-tab>
+  <mat-tab label="Shipping"> Content of the shipping tab </mat-tab>
+</mat-tab-group>
+
+<mat-tab-group dynamicHeight>
+  <mat-tab label="Short tab">
+    <div class="example-small-box mat-elevation-z4">
+      Small content
+    </div>
+  </mat-tab>
+  <mat-tab label="Long tab">
+    <div class="example-large-box mat-elevation-z4">
+      Large content
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<h3>Dialog</h3>
+<button mat-raised-button
+  (click)="openDialog()"
+>Open Dialog</button>
+
+<ol>
+  <li>
+    <mat-form-field>
+      <input matInput [(ngModel)]="name" placeholder="What's your name?">
+    </mat-form-field>
+  </li>
+  <li>
+    <button mat-raised-button (click)="openDialog2()">Pick one</button>
+  </li>
+  <li *ngIf="animal">
+    You chose: <i>{{animal}}</i>
+  </li>
+</ol>
