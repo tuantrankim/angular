@@ -23,30 +23,39 @@ copy/paste some example to component.html
 # Create module
 ng g m mat-components
 
-# MaterialDemo
+# Apply theme and typography
+Refrence at Angular material website and google fonts
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
+Update index.html
+<body class="mat-app-background mat-typography">
 
-## Development server
+Add custom font in styles.css
+@import "https://fonts.googleapis.com/css?family=Open+Sans";
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Add theme file in angular.json
+"styles": [
+              "src/styles.css",
+              "src/theme.scss"
+            ],
+New file src/theme.scss
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+@import "~@angular/material/_theming.scss";
+@include mat-core();
 
-## Build
+// Define a custom theme
+$app-primary: mat-palette($mat-blue, 600);
+$app-accent: mat-palette($mat-yellow, 700);
+$app-warn: mat-palette($mat-red);
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+//$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
+@include angular-material-theme($app-theme);
 
-## Running unit tests
+// Define custom typography
+$app-typography: mat-typography-config(
+    $font-family:   '"Open Sans", "Helvetica Neue", sans-serif',
+    $headline:      mat-typography-level(34px, 32px, 700),
+);
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@include angular-material-typography($app-typography);
