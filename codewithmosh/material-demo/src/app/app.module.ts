@@ -10,13 +10,19 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
 import { CourseService } from './course.service';
 import { AnimalComponent } from './animal/animal.component';
 import { MatComponentsModule } from './mat-components/mat-components.module';
+import { TableDemoComponent } from './table-demo/table-demo.component';
+import { TablePaginationDemoComponent } from './table-pagination-demo/table-pagination-demo.component';
+import { TableSimpleDemoComponent } from './table-simple-demo/table-simple-demo.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     EditCourseComponent,
-    AnimalComponent
+    AnimalComponent,
+    TableDemoComponent,
+    TablePaginationDemoComponent,
+    TableSimpleDemoComponent
   ],
   entryComponents:[
     EditCourseComponent,
