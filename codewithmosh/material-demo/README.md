@@ -5,9 +5,9 @@ $npm i --save @angular/cdk @angular/material @angular/animations hammerjs
 @import  "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 2- Add anymation support in app.module.ts
-@import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //if don't want to have animation
-@import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 imports:[
     BrowserAnimationsModule
 ],
