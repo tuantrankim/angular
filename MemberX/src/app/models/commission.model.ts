@@ -1,0 +1,30 @@
+export interface Commission {
+    id: number;
+    type: string;
+    typeID: number;
+    amount: number;
+    // Employee salesPerson;
+    note: string;
+    // Club assignedClub;
+    // Club commissionClub;
+    date: Date;
+    isActive: boolean;
+    attendantID: number;
+    // Customer customer;
+    paymentClubNumber: number;
+    paymentID: number;
+    editDate: Date;
+    editEmployeeID: number;
+    invoiceClubNumber: number;
+    invoiceID: number;
+    contractClubNumber: number;
+    contractID: number;
+    commissionPlanID: number;
+    commissionTypeID: number;
+    commissionUnits: number;
+    commissionSplit: number;
+    commissionSale: number;
+    commissionFixed: number;
+    dollarPerUnit: number;
+    origCommissionID: number;
+}

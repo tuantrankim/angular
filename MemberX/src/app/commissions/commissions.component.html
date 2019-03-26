@@ -1,0 +1,71 @@
+<h2>Commissions</h2>
+
+<!-- <input type="text" class="form-control" (keyup.enter)="search(customerID)" #customerID>
+<button class="btn btn-primary" (click)="search(customerID)">Search</button> -->
+
+<!-- <ul class="list-group">
+  <li *ngFor="let commission of commissions" class="list-group-item">
+    `{{commission.date}}, {{commission.location}}, {{commission.type}}
+    , {{commission.amount}}, {{commission.note}}</li>
+</ul> -->
+
+
+<div class="main-container ">
+  <div *ngIf="isLoading" class="loading-shade">
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  </div>
+
+<div *ngIf="commissions?.length > 0">
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="table-container  mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort >
+
+  <!-- id Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    <td mat-footer-cell *matFooterCellDef> </td>
+
+  </ng-container>
+
+  <!-- Type Column -->
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    <td mat-footer-cell *matFooterCellDef> Total </td>
+  </ng-container>
+  
+  <!-- Amount Column -->
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+    <td mat-footer-cell *matFooterCellDef> {{getTotal()|number : '1.2-2'}} </td>
+  </ng-container>
+
+  <!-- Date Column -->
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date: 'MM/dd/yyyy'}} </td>
+    <td mat-footer-cell *matFooterCellDef>  </td>
+  </ng-container>
+
+  <!-- Note Column -->
+  <ng-container matColumnDef="note">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Note </th>
+    <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+    <td mat-footer-cell *matFooterCellDef>  </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+</table>
+</div>
+
+<mat-paginator [length]="commissions?.length" [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+</div>
+</div>

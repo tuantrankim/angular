@@ -1,0 +1,16 @@
+
+<!-- <input type="text" class="form-control" (keyup.enter)="search(barcodeID)" #barcodeID>
+<button class="btn btn-primary" (click)="search(barcodeID)">Search</button>
+<div>
+  {{customer | json}}
+</div> -->
+
+<form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Customer Barcode ID" aria-label="Load"
+        #barcodeID
+        (keyup.enter)="search(barcodeID)"
+    >
+    <button class="btn btn-outline-success my-2 my-sm-0" type="button" 
+      (click)="search(barcodeID)">Search</button>
+  </form>
+

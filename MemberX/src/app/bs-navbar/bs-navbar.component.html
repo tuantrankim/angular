@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+  <a class="navbar-brand" routerLink="/">X</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+      <ng-template #anonymousUser> 
+          <li class="nav-item">
+              <a class="nav-link" routerLink="/login">Login</a>
+            </li>
+      </ng-template>
+      
+      <li ngbDropdown *ngIf="security && security.isAuth; else anonymousUser" class="nav-item dropdown">
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">{{security.displayName}}</a>
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
+          <a ngbDropdownItem class="dropdown-item" routerLink="/customers">Manage Customers</a>
+          <a ngbDropdownItem class="dropdown-item" routerLink="/commissions">Manage Commissions</a>
+
+          <a ngbDropdownItem class="dropdown-item" routerLink="#">Something else here</a>
+          <a ngbDropdownItem class="dropdown-item" (click)="logout()">Log Out</a>
+        </div>
+      </li>
+    </ul>
+    <!-- Customer search -->
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" [disabled] = "!(security && security.isAuth)" type="text" placeholder="Customer Barcode ID" aria-label="Load" #barcodeID
+        (keyup.enter)="search(barcodeID)">
+      <button [disabled] = "!(security && security.isAuth)"  class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="search(barcodeID)">Search</button>
+    </form>
+    
+    <!-- End Customer search -->
+    <!-- <app-customer></app-customer> -->
+  </div>
+</nav>
+
+<div *ngIf="customer" class="jumbotron">
+  <div class="container">
+    {{customer | json}}
+
+  </div>
+
+</div>
