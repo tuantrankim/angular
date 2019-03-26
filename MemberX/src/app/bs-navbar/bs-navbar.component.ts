@@ -3,6 +3,7 @@ import { SecurityService } from '../services/security.service';
 import { MemberXSystemService } from '../services/member-xsystem.service';
 import { Customer } from '../models/customer.model';
 import { longStackSupport } from 'q';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bs-navbar',
@@ -12,7 +13,9 @@ import { longStackSupport } from 'q';
 export class BsNavbarComponent implements OnInit {
 
   customer: Customer;
-  constructor(private service: MemberXSystemService, public security: SecurityService) { }
+  constructor(private service: MemberXSystemService,
+              public security: SecurityService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -36,5 +39,6 @@ export class BsNavbarComponent implements OnInit {
     this.security.userName = "";
     this.security.displayName = "";
     this.security.customer = null;
+    this.router.navigate(['/']);
   }
 }

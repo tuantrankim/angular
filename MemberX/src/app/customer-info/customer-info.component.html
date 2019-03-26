@@ -1,0 +1,18 @@
+<div class="jumbotron">
+  <!-- <div>{{security?.customer | json}}</div> -->
+  <h2>Customer Information</h2>
+  <div class="row">
+    <div class="col-md-4">Barcode ID: {{security?.customer?.barcodeID}}</div>
+    <div class="col-md-4">Customer ID: {{security?.customer?.id}}</div>
+    <div class="col-md-4">Name: {{security?.customer?.name?.fullName}}</div>
+  </div>
+  <div class="row">
+      <div class="col-md-4">Category ID: {{security?.customer?.categoryID}}</div>
+      <div class="col-md-4">Source ID: {{security?.customer?.sourceID}}</div>
+    </div>
+  <div class="row">
+    <div class="col-md-4">Phone:</div>
+    <div class="col-md-4">Email:</div>
+    <div class="col-md-4">Status:</div>
+  </div>
+</div>

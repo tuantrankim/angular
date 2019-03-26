@@ -1,23 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MemberXSystemService } from '../services/member-xsystem.service';
 import { Commission } from '../models/commission.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
-import { SecurityService } from '../services/security.service';
+import { SecurityService, INotifyChange } from '../services/security.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-commissions',
   templateUrl: './commissions.component.html',
   styleUrls: ['./commissions.component.css']
 })
-export class CommissionsComponent implements OnInit {
+export class CommissionsComponent implements OnInit, OnDestroy {
   commissions: Commission[];
   displayedColumns: string[] = ['id', 'type', 'amount', 'date', 'note'];
   dataSource: MatTableDataSource<Commission>;
   isLoading: boolean;
   pipe: DatePipe;
+  private subscription: Subscription;
 
   private sort: MatSort;
   private paginator: MatPaginator;
@@ -59,6 +61,12 @@ export class CommissionsComponent implements OnInit {
       const formatted = this.pipe.transform(data.date, 'MM/dd/yyyy');
       return formatted.indexOf(filter) >= 0 || defaultPredicate(data, filter) ;
     }
+
+    this.subscription = this.security.notifyObservable$.subscribe((change: INotifyChange) => {
+      if(change.propName === 'customer'){
+        this.loadCommissions();
+      }
+    });
 
     this.loadCommissions();
   }
@@ -126,5 +134,9 @@ export class CommissionsComponent implements OnInit {
 
   getTotal() {
     return this.commissions.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

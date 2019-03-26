@@ -17,6 +17,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SecurityService } from './services/security.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { CustomerInfoComponent } from './customer-info/customer-info.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthGuardService } from './services/auth-guard.service';
     CommissionsComponent,
     CustomerComponent,
     BsNavbarComponent,
-    HomeComponent
+    HomeComponent,
+    CustomerInfoComponent
   ],
   imports: [
     BrowserModule,
