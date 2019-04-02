@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class BsNavbarComponent implements OnInit {
 
   customer: Customer;
+  isCollapsed = true;
   constructor(private service: MemberXSystemService,
               public security: SecurityService,
               private router: Router) { }
@@ -32,12 +33,14 @@ export class BsNavbarComponent implements OnInit {
         this.customer = data as Customer;
         this.security.customer = this.customer;
       });
+
+    input.value = '';
   }
 
   logout(){
     this.security.isAuth = false;
-    this.security.userName = "";
-    this.security.displayName = "";
+    this.security.userName = '';
+    this.security.displayName = '';
     this.security.customer = null;
     this.router.navigate(['/']);
   }

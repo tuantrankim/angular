@@ -1,18 +1,7 @@
 <app-customer-info></app-customer-info>
 
-<h2>Commissions</h2>
-
-<!-- <input type="text" class="form-control" (keyup.enter)="search(customerID)" #customerID>
-<button class="btn btn-primary" (click)="search(customerID)">Search</button> -->
-
-<!-- <ul class="list-group">
-  <li *ngFor="let commission of commissions" class="list-group-item">
-    `{{commission.date}}, {{commission.location}}, {{commission.type}}
-    , {{commission.amount}}, {{commission.note}}</li>
-</ul> -->
-
-
 <div class="main-container ">
+    <h2>Commissions</h2>
   <div *ngIf="isLoading" class="loading-shade">
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
   </div>

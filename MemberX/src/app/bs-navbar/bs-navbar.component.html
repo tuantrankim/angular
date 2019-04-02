@@ -1,11 +1,12 @@
-<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
-  <a class="navbar-brand" routerLink="/">X</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+<nav  class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarsExampleDefault"
     aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+  <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+      <a class="navbar-brand  btn btn-outline-success" routerLink="/">MX</a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
@@ -31,22 +32,27 @@
         </div>
       </li>
     </ul>
-    <!-- Customer search -->
+    <!-- Customer search
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" [disabled] = "!(security && security.isAuth)" type="text" placeholder="Customer Barcode ID" aria-label="Load" #barcodeID
         (keyup.enter)="search(barcodeID)">
       <button [disabled] = "!(security && security.isAuth)"  class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="search(barcodeID)">Search</button>
-    </form>
-    
-    <!-- End Customer search -->
-    <!-- <app-customer></app-customer> -->
+    </form> -->
+   
+
   </div>
+  <!-- Customer search -->
+    <div class=" col-xs-2">
+    <div class="input-group">
+        <input class="form-control" [disabled] = "!(security && security.isAuth)" type="text" placeholder="Customer Barcode ID" aria-label="Load" #barcodeID
+        (keyup.enter)="search(barcodeID)">
+
+        <div class="input-group-append">
+          <!-- <span id="basic-addon2"> -->
+              <button [disabled] = "!(security && security.isAuth)"  
+              class="btn btn-outline-success" type="button" (click)="search(barcodeID)">Search</button>
+          <!-- </span> -->
+        </div>
+      </div>
+    </div>
 </nav>
-
-<!-- <div *ngIf="customer" class="jumbotron">
-  <div class="container">
-    {{customer | json}}
-
-  </div>
-
-</div> -->
