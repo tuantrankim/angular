@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  MemberXSystemBaseurl: 'http://localhost/MemberXSystem/api'
+  MemberXSystem_Baseurl: 'http://localhost/MemberXSystem/api',
+  MemberXAuth_Baseurl: 'http://localhost/MemberXSystem/token'
 };
 
 /*

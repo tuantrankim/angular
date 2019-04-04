@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
+import { AppUser } from '../models/app-user';
+import { AppUserAuth } from '../models/app-user-auth';
+
+
 
 @Injectable()
 export class DataService {
-  constructor(private baseUrl: string, private http: HttpClient) { }
+  private baseUrl = '';
+  private authBaseUrl = '';
+
+  constructor(private http: HttpClient) {
+    this.baseUrl = environment.MemberXSystem_Baseurl;
+    this.authBaseUrl = environment.MemberXAuth_Baseurl;
+  }
 
   getAll(action: string) {
     return this.http.get(this.baseUrl + '/' + action)
@@ -24,6 +35,18 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
+  auth(user: AppUser): Observable<AppUserAuth> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    };
+    const usrName = encodeURIComponent(user.userName);
+    const pass = encodeURIComponent(user.password);
+    const data = `grant_type=password&username=${usrName}&password=${pass}`;
+    return this.http.post<AppUserAuth>(this.authBaseUrl, data, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
   post(action: string, resource) {
     return this.http.post(this.baseUrl + '/' + action, resource)
       .pipe(catchError(this.handleError));
@@ -42,20 +65,20 @@ export class DataService {
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
         // A client-side or network error occurred. Handle it accordingly.
-        console.error('An error occurred:', error.error.message);
+        console.log('An error occurred:', error.error.message);
     } else {
 
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
-        // Known error
+      console.log(
+        `Backend error: code ${error.status}, ${error.error.error}, ${error.error.error_description}`, error);
+      // Known error
       if (error.status === 404) {
-          return throwError(
-            'Well known error: Invalid request');
+          return throwError('Not found');
         }
-
+      if (error.status === 400) {
+        return throwError('Bad request');
+      }
     }
      // return an observable with a user-facing error message
     return throwError(

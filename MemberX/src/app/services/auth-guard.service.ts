@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { SecurityService } from './security.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(private security: SecurityService, private router: Router) { }
 
-  canActivate(route, state: RouterStateSnapshot) {
-    if (this.security && this.security.isAuth) { return true; }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    let claimType: string = route.data["claimType"];
 
-    this.router.navigate(['/login'], {queryParams:{returnUrl: state.url}});
-    return false;
+    // if (this.security && this.security.isAuth) { return true; }
+    if (this.security.securityObject.isAuthenticated
+      && this.security.hasClaim(claimType)) {
+         return true;
+    } else {
+      this.router.navigate(['/login'], {queryParams:{returnUrl: state.url}});
+      return false;
+    }
   }
 }

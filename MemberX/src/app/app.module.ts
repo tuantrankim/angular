@@ -16,8 +16,10 @@ import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SecurityService } from './services/security.service';
-import { AuthGuardService } from './services/auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { CustomerInfoComponent } from './customer-info/customer-info.component';
+import { TestComponent } from './test/test.component';
+import { HttpInterceptorModule } from './security/http-interceptor.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { CustomerInfoComponent } from './customer-info/customer-info.component';
     CustomerComponent,
     BsNavbarComponent,
     HomeComponent,
-    CustomerInfoComponent
+    CustomerInfoComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -37,21 +40,12 @@ import { CustomerInfoComponent } from './customer-info/customer-info.component';
     HttpClientModule,
     MatComponentsModule,
     NgbModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent},
-      { path: 'login', component: LoginComponent},
-      { path: 'commissions', component: CommissionsComponent, canActivate: [AuthGuardService]},
-      { path: 'customers', component: CustomerComponent, canActivate: [AuthGuardService]},
-      { path: 'customer/:customerID', component: CustomerComponent, canActivate: [AuthGuardService]},
-      { path: '**', component: LoginComponent},
-
-    ])
-
+    HttpInterceptorModule
   ],
   providers: [
     MemberXSystemService,
     SecurityService,
-    AuthGuardService,
+    AuthGuard,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]

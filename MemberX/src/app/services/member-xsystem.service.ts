@@ -9,6 +9,6 @@ import { environment } from 'src/environments/environment';
 export class MemberXSystemService extends DataService{
 
   constructor(http: HttpClient) {
-    super(environment.MemberXSystemBaseurl, http);
+    super(http);
    }
 }
