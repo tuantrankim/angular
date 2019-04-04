@@ -30,8 +30,8 @@ namespace MemberXSystem
             // Web API configuration and services
 
             // Enable cors origin requests
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
+            //var cors = new EnableCorsAttribute("*", "*", "*");
+            //config.EnableCors(cors);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

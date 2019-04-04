@@ -15,7 +15,7 @@ namespace MemberXSystem
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             // Enable cors origin requests
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             var myProvider = new AppAuthorizationServerProvider();
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
