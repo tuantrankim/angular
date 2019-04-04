@@ -1,0 +1,36 @@
+<div class="jumbotron">
+        <div class="container">
+         
+                <form [formGroup]="form" (ngSubmit)=login()>
+                        <h2>Login</h2>
+                        <div *ngIf="form.errors" class="alert alert-danger">
+                            The username or password is invalid.
+                        </div>
+                        <div formGroupName="login">
+                            <label for="username">Username</label>
+                            <input formControlName="username" id="username" type="text" class="form-control" (keyup)="onKeyUp($event)">
+                    
+                            <div *ngIf="username.touched && username.invalid" class="alert alert-danger">
+                                <div *ngIf="username.errors.required">Username is required</div>
+                            </div>
+                    
+                            <label for="password">Password</label>
+                            <input formControlName="password" id="password" type="password" class="form-control">
+                            <div *ngIf="password.touched && password.invalid" class="alert alert-danger">
+                                <div *ngIf="password.errors.required">Password is required</div>
+                            </div>
+                    
+                        </div>
+                         <!-- <p> {{securityObject | json}} </p> -->
+                        <!-- <p>{{form.value | json}}</p> -->
+                        <br/>
+                        <button class="btn btn-primary" [disabled]="!form.valid" type="submit">Login</button>
+                    </form>
+
+
+        </div>
+      </div>
+
+
+
+
