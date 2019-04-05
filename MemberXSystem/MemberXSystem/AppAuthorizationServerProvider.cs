@@ -1,4 +1,4 @@
-﻿using LAFitness.FDMT.Common.Data;
+using LAFitness.FDMT.Common.Data;
 using LAFitness.FDMT.Common.Interface;
 using LAFitness.WCF;
 using Microsoft.Owin.Security;
@@ -39,8 +39,8 @@ namespace MemberXSystem
                 if (emp != null)
                 {
                     var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                    identity.AddClaim(new Claim(ClaimTypes.Name, emp.Name.FullName));
-                    identity.AddClaim(new Claim("username", context.UserName));
+                    //identity.AddClaim(new Claim(ClaimTypes.Name, emp.Name.FullName));
+                    //identity.AddClaim(new Claim("username", context.UserName));
 
                     // Add Role
                     string role = "";
@@ -50,12 +50,15 @@ namespace MemberXSystem
                     if (role != "") identity.AddClaim(new Claim(ClaimTypes.Role, role));
 
                     // Add Privileges
-                    AuthenticationProperties props = new AuthenticationProperties();
-                    foreach (var privilege in emp.SecurityPrivileges)
-                    {
-                        if (privilege.Value == true)  props.Dictionary.Add(privilege.Key, "true");
-                    }
 
+                    AuthenticationProperties props = new AuthenticationProperties();
+                    props.Dictionary.Add("user_name", emp.Name.FullName);
+
+                    string[] claimsArray = emp.SecurityPrivileges.Where(i => i.Value == true).Select(c => c.Key).ToArray<string>();
+                    string claims = string.Join(",", claimsArray);
+                    props.Dictionary.Add("claims", claims);
+                    
+                    
                     var ticket = new AuthenticationTicket(identity, props);
                     context.Validated(ticket);
                 }
